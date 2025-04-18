@@ -91,7 +91,7 @@ final readonly class BlackListService
 
     public function save(BlackList $blackList): BlackList
     {
-        $this->blackListRepository->save($blackList, true);
+        $this->blackListRepository->save($blackList->setUpdatedAt(new \DateTime()), true);
         return $blackList;
     }
 }
