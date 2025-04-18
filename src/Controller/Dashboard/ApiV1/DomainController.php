@@ -20,9 +20,11 @@ class DomainController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('domain/{domain?}', name: 'app_api_v1_domain', methods: ['GET'])]
-    public function isDomainOnBlackList(?string $domain, Request $request): Response
+    #[Route('domain', name: 'app_api_v1_domain', methods: ['POST'])]
+    public function isDomainOnBlackList(Request $request): Response
     {
+        $domain = $request->query->get('domain');
+
         if ($this->isFieldEmpty($domain)) {
             return $this->fieldIsRequiredResponse('Domain');
         }
