@@ -2,6 +2,8 @@
 
     <div class="sidebar">
 
+        {% set isSuperAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{asset('lte/img/avatar-160x160.png')}}" class="img-circle" alt="User Image">
@@ -27,8 +29,8 @@
 
                 <li class="nav-item">
                     <a href="{{path('app_dashboard_users_index')}}" class="nav-link">
-                        <i class="fas fa-users nav-icon"></i>
-                        <p>Users</p>
+                        <i class="fas {{ isSuperAdmin ? 'fa-users' : 'fa-user' }} nav-icon"></i>
+                        <p>{{ isSuperAdmin ? 'Users' : 'User' }}</p>
                     </a>
                 </li>
 
@@ -59,13 +61,13 @@
 
                 <li class="nav-header">EXTRA</li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ path('app_dashboard_documentation_index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>Documentation</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ path('app_dashboard_logs_index') }}" class="nav-link">
                         <i class="nav-icon fas fa-file"></i>
                         <p>Logs</p>
                     </a>
