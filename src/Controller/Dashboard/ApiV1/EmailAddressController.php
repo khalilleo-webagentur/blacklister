@@ -20,29 +20,13 @@ class EmailAddressController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('hash-email', name: 'app_api_v1_hash_email', methods: ['GET'])]
-    public function sha1HashEmail(Request $request): Response
+    #[Route('email', name: 'app_api_v1_email', methods: ['POST'])]
+    public function isEmailOnBlackList(Request $request): Response
     {
         $email = $request->get('email');
 
         if (empty($email)) {
-            return $this->json([
-                'success' => false,
-                'message' => 'Parameter email cannot be empty.',
-            ]);
-        }
-
-        return $this->json([
-            'success' => true,
-            'message' => sprintf('Hash of your email %s is: %s', $email, sha1($email)),
-        ]);
-    }
-
-    #[Route('email/{hashEmail?}', name: 'app_api_v1_email', methods: ['GET'])]
-    public function isEmailOnBlackList(?string $hashEmail, Request $request): Response
-    {
-        if (empty($hashEmail)) {
-            return $this->fieldIsRequiredResponse('E-mail Address');
+            return $this->fieldIsRequiredResponse('email');
         }
 
         if (false === $this->isApiKeyValid($request)) {
@@ -61,7 +45,7 @@ class EmailAddressController extends DashboardAbstractController
             return $this->notAuthorizedResponse();
         }
 
-        $isOnBlackList = $this->blackListService->isEmailOnBlackList($api, $hashEmail);
+        $isOnBlackList = $this->blackListService->isEmailOnBlackList($api, $email);
 
         return $this->json([
             'success' => $isOnBlackList,
