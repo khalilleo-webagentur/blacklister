@@ -1,0 +1,21 @@
+parameters:
+
+  app_name: "BLer."
+  full_app_name: "BlackLister"
+  no_reply: "no-reply@bler.khalilleo.com"
+
+  webmasterName: "Webmaster"
+  webmasterEmail: "demo@khalilleo.com"
+
+  phoneNumber: '(+49) 0163/616-5396'
+  infoEmail: 'info@khalilleo.com'
+  legalEmail: 'legal@khalilleo.com'
+  addressStreet: 'Paul-Gerhardt-Str. 7'
+  addressPlz: '74321'
+  addressCity: 'Bietigheim-Bissingen'
+  addressCountry: 'Deutschland'
+
+  app_version: "1.0.0"
+  app_author: "Khalilleo Teams"
+  app_created: "2024-07-01"
+  app_made_by: "khalilleo.com"
