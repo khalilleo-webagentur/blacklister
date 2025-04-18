@@ -26,7 +26,7 @@ class ApiKey
     private string $apiKey = "";
 
     #[ORM\Column(length: 100)]
-    private string $name = "";
+    private string $name = "Default API Key";
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;

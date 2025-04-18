@@ -47,12 +47,12 @@ final readonly class BlackListService
         return false;
     }
 
-    public function isEmailOnBlackList(ApiKey $apiKey, string $hashEmail): bool
+    public function isEmailOnBlackList(ApiKey $apiKey, string $email): bool
     {
         $blacklists = $this->getAllByUser($apiKey->getUser());
 
         foreach ($blacklists as $blacklist) {
-            if (sha1($blacklist->getEmail()) === $hashEmail) {
+            if ($blacklist->getEmail() === $email) {
                 $countEmailBlocked = $blacklist->getCountEmailBlocked();
                 $this->save($blacklist->setCountEmailBlocked($countEmailBlocked + 1));
                 return true;
@@ -67,9 +67,6 @@ final readonly class BlackListService
         $blacklists = $this->getAllByUser($apiKey->getUser());
 
         foreach ($blacklists as $blacklist) {
-
-            $domain = str_replace('_', '.', $domain);
-
             if ($blacklist->getDomain() === $domain) {
                 $countDomainBlocked = $blacklist->getCountDomainBlocked();
                 $this->save($blacklist->setCountDomainBlocked($countDomainBlocked + 1));
@@ -78,6 +75,18 @@ final readonly class BlackListService
         }
 
         return false;
+    }
+
+    public function create(UserInterface $user, ?string $username, ?string $email, ?string $domain): void
+    {
+        $blackList = new BlackList();
+        $blackList
+            ->setUser($user)
+            ->setUsername($username)
+            ->setEmail($email)
+            ->setDomain($domain);
+
+        $this->save($blackList);
     }
 
     public function save(BlackList $blackList): BlackList

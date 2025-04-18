@@ -20,13 +20,13 @@ class IndexController extends DashboardAbstractController
     #[Route('/k0h5a6t0l1w2', name: 'app_dashboard_api_keys_index')]
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->hasRoleAdmin();
 
         $user = $this->getUser();
 
-        $apiKeys = $this->isSuperAdmin($user)
+        $apiKeys = $this->isSuperAdmin()
             ? $this->apiKeysService->getAll()
-            : $this->apiKeysService->getByUser($user);
+            : [$this->apiKeysService->getByUser($user)];
 
         return $this->render('dashboard/api-keys/index.html.twig', [
             'apiKeys' => $apiKeys,

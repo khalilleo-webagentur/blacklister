@@ -1,25 +1,21 @@
 {% extends 'dashboard/layout/base.html.twig' %}
 
-{% block title %} Dashboard Users {% endblock %}
+{% block title %} Dashboard Users overview {% endblock %}
 
 {% block body %}
 
 <div class="content-wrapper">
 
+    {% set isSuperAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h5 class="m-0 text-dark mt-1">Users</h5>
+                    <h5 class="m-0 text-dark mt-1">{{ isSuperAdmin ? 'Users' : 'User' }} overview</h5>
                 </div>
                 <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <!-- <li class="text-secondary pointer">New <span class="fa fa-user-circle fa-sm"></span></li>
-                        <span class="px-2 text-light-50">|</span>
-                        <li class="text-secondary pointer">Deactivate <span class="fa fa-ban fa-sm"></span></li>
-                        <span class="px-2 text-light-50">|</span> -->
-                        {# <li class="text-secondary pointer">Infos <span class="fa fa-info-circle fa-sm"></span></li> #}
-                    </ol>
+                    <ol class="breadcrumb float-sm-right"></ol>
                 </div>
             </div>
         </div>

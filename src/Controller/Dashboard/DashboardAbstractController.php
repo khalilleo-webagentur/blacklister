@@ -8,7 +8,6 @@ use App\Traits\FormValidationTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class DashboardAbstractController extends AbstractController
 {
@@ -66,8 +65,13 @@ class DashboardAbstractController extends AbstractController
         return substr($apiKey, 7);
     }
 
-    protected function isSuperAdmin(UserInterface $user): bool
+    protected function isSuperAdmin(): bool
     {
         return $this->isGranted('ROLE_SUPER_ADMIN');
+    }
+
+    protected function hasRoleAdmin(): void
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
     }
 }

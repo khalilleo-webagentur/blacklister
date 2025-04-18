@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard\Users;
 
+use App\Controller\Dashboard\DashboardAbstractController;
 use App\Service\UserService;
 use App\Traits\FormValidationTrait;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('dashboard/c2o5i0p7v6s5p4w5')]
-class IndexController extends AbstractController
+class IndexController extends DashboardAbstractController
 {
     use FormValidationTrait;
 
@@ -27,9 +27,11 @@ class IndexController extends AbstractController
     #[Route('/users/home', name: 'app_dashboard_users_index')]
     public function index(): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->hasRoleAdmin();
 
-        $users = $this->userService->getAll();
+        $users = $this->isSuperAdmin()
+            ? $this->userService->getAll()
+            : [$this->getUser()];
 
         return $this->render('dashboard/users/index.html.twig', [
             'users' => $users,
@@ -39,7 +41,7 @@ class IndexController extends AbstractController
     #[Route('/user/edit/{id}', name: 'app_dashboard_user_edit')]
     public function edit(?string $id): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->hasRoleAdmin();
 
         $user = $this->userService->getById(
             $this->validateNumber($id)
@@ -58,7 +60,7 @@ class IndexController extends AbstractController
     #[Route('/user/store/{id}', name: 'app_dashboard_user_store', methods: 'POST')]
     public function store(?string $id, Request $request): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN');
+        $this->hasRoleAdmin();
 
         $name = $this->validate($request->request->get('name'));
 

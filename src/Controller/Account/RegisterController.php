@@ -7,6 +7,8 @@ namespace App\Controller\Account;
 use App\Entity\User;
 use App\Entity\UserSetting;
 use App\Mails\Account\AccountConfirmationMail;
+use App\Service\ApiKeysService;
+use App\Service\BlackListService;
 use App\Service\TokenGeneratorService;
 use App\Service\UserService;
 use App\Service\UserSettingService;
@@ -28,9 +30,11 @@ class RegisterController extends AbstractController
     private const AUTH_ROUTE = 'app_auth';
 
     public function __construct(
-        private readonly UserService $userService,
+        private readonly UserService           $userService,
         private readonly TokenGeneratorService $tokenGeneratorService,
-        private readonly UserSettingService $userSettingService
+        private readonly UserSettingService    $userSettingService,
+        private readonly ApiKeysService        $apiKeysService,
+        private readonly BlackListService      $blackListService,
     ) {
     }
 
@@ -110,6 +114,9 @@ class RegisterController extends AbstractController
                 ->setIsVerified(true)
                 ->setToken(null)
         );
+
+        $this->apiKeysService->create($user);
+        $this->blackListService->create($user, 'John_doe', 'j.doe@example.com', 'example.com');
 
         $this->addFlash('notice', 'Your email address has been verified.');
 
