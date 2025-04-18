@@ -20,11 +20,13 @@ class UsernameController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('username/{username?}', name: 'app_api_v1_username', methods: ['GET'])]
-    public function isUsernameOnBlackList(?string $username, Request $request): Response
+    #[Route('username', name: 'app_api_v1_username', methods: ['POST'])]
+    public function isUsernameOnBlackList(Request $request): Response
     {
+        $username = $request->get('username');
+
         if ($this->isFieldEmpty($username)) {
-            return $this->fieldIsRequiredResponse('Username');
+            return $this->fieldIsRequiredResponse('username');
         }
 
         if (false === $this->isApiKeyValid($request)) {
