@@ -23,7 +23,12 @@
                 </td>
                 <td>{{ row.version }}</td>
                 <td>{{ row.name }}</td>
-                <td>{{ row.apiKey }}</td>
+                <td>
+                    {{ row.apiKey }}
+                    <span class="fa fa-copy text-orangered-light pointer copyToClipBoard"
+                          title="Copy"
+                          data-token="{{ row.apiKey }}"></span>
+                </td>
 
                 <td title="{{ timeAgo(row.updatedAt) }}">{{ row.updatedAt|date }}</td>
                 <td title="{{ timeAgo(row.createdAt) }}">{{ row.createdAt|date }}</td>
