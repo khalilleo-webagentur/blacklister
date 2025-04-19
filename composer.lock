@@ -1386,16 +1386,16 @@
         },
         {
             "name": "khalilleo-webagentur/token-gen",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/khalilleo-webagentur/token-gen.git",
-                "reference": "9661b4eaaae52d5047fdce7a7931ed1b60654c73"
+                "reference": "c0fc8194278c59ed333ee195791fc75b721d58f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/khalilleo-webagentur/token-gen/zipball/9661b4eaaae52d5047fdce7a7931ed1b60654c73",
-                "reference": "9661b4eaaae52d5047fdce7a7931ed1b60654c73",
+                "url": "https://api.github.com/repos/khalilleo-webagentur/token-gen/zipball/c0fc8194278c59ed333ee195791fc75b721d58f6",
+                "reference": "c0fc8194278c59ed333ee195791fc75b721d58f6",
                 "shasum": ""
             },
             "require": {
@@ -1414,10 +1414,11 @@
             "authors": [
                 {
                     "name": "Khalilleo",
-                    "email": "info@khalilleo.com"
+                    "email": "dev@khalilleo.com"
                 }
             ],
             "description": "PHP library for simple and secure generation of random tokens.",
+            "homepage": "https://github.com/khalilleo-webagentur",
             "keywords": [
                 "generation",
                 "password",
@@ -1427,9 +1428,9 @@
             ],
             "support": {
                 "issues": "https://github.com/khalilleo-webagentur/token-gen/issues",
-                "source": "https://github.com/khalilleo-webagentur/token-gen/tree/v1.0.0"
+                "source": "https://github.com/khalilleo-webagentur/token-gen/tree/v1.0.1"
             },
-            "time": "2024-03-14T23:09:16+00:00"
+            "time": "2025-04-19T14:28:39+00:00"
         },
         {
             "name": "psr/cache",
