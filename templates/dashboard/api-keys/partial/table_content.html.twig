@@ -6,6 +6,7 @@
                 <th>{{ 'User'|trans }}</th>
                 <th>{{ 'Version'|trans }}</th>
                 <th>{{ 'Name'|trans }}</th>
+                <th>{{ 'UserAgent'|trans }}</th>
                 <th>{{ 'ApiKey'|trans }}</th>
                 <th>{{ 'Updated'|trans }}</th>
                 <th>{{ 'Created'|trans }}</th>
@@ -18,11 +19,12 @@
                 <td>{{ row.id }}</td>
                 <td>
                     <a href="{{path('app_dashboard_user_edit', {id:row.user.id})}}">
-                        {{ row.user.name }}
+                        {{ row.user.name|capitalize }}
                     </a>
                 </td>
                 <td>{{ row.version }}</td>
                 <td>{{ row.name }}</td>
+                <td>{{ row.userAgent }}</td>
                 <td>
                     {{ row.apiKey }}
                     <span class="fa fa-copy text-orangered-light pointer copyToClipBoard"

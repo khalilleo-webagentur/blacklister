@@ -20,7 +20,7 @@
                 <td>{{ row.id }}</td>
                 <td>
                     <a href="{{path('app_dashboard_user_edit', {id:row.user.id})}}">
-                        {{ row.user.name }}
+                        {{ row.user.name|capitalize }}
                     </a>
                 </td>
                 <td>{{ row.username ? row.username|capitalize : '---' }}</td>
