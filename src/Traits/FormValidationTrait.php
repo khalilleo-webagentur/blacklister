@@ -77,6 +77,14 @@ trait FormValidationTrait
         return $input;
     }
 
+    private function formatUserAgent(string $input): string
+    {
+        $formattedString = preg_replace('/[^a-zA-Z]+/', ' ', $input);
+        $formattedString = ucwords(trim($formattedString));
+
+        return str_replace(' ', '-', $formattedString);
+    }
+
     private function validateDatetime(?string $datetime): DateTimeInterface
     {
         $format = 'Y-m-d H:i';

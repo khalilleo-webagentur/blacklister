@@ -21,6 +21,7 @@ class TwigHelper extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('maskApiKey', [$this, 'maskApiKey']),
             new TwigFunction('hash', [$this, 'hash']),
             new TwigFunction('timeAgo', [$this, 'timeAgo']),
             new TwigFunction('formatSizeUnits', [$this, 'formatSizeUnits']),
@@ -37,6 +38,16 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+
+    public function maskApiKey(string $apiKey): string
+    {
+        $start = substr($apiKey, 0, 10);
+        $end = substr($apiKey, -4);
+        $hiddenLength = strlen($apiKey) - 30;
+        $hidden = str_repeat('*', $hiddenLength);
+
+        return $start . $hidden . $end;
     }
 
     public function hash(string $text): string

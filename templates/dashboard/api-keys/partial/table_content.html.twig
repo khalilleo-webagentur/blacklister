@@ -26,7 +26,7 @@
                 <td>{{ row.name }}</td>
                 <td>{{ row.userAgent }}</td>
                 <td>
-                    {{ row.apiKey }}
+                    <span class="cursor-help" title="{{ row.apiKey }}">{{ maskApiKey(row.apiKey) }}</span>
                     <span class="fa fa-copy text-orangered-light pointer copyToClipBoard"
                           title="Copy"
                           data-token="{{ row.apiKey }}"></span>

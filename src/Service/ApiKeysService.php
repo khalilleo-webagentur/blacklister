@@ -21,9 +21,13 @@ final readonly class ApiKeysService
         return $this->apiKeyRepository->findOneBy(['apiKey' => $apiKey]);
     }
 
-    public function getByUser(UserInterface $user): ?ApiKey
+    /**
+     * @return ApiKey[]
+     *
+     */
+    public function getAllByUser(UserInterface $user): array
     {
-        return $this->apiKeyRepository->findOneBy(['user' => $user], ['id' => 'DESC']);
+        return $this->apiKeyRepository->findBy(['user' => $user], ['createdAt' => 'DESC']);
     }
 
     /**
@@ -31,16 +35,23 @@ final readonly class ApiKeysService
      */
     public function getAll(): array
     {
-        return $this->apiKeyRepository->findBy([], ['id' => 'DESC']);
+        return $this->apiKeyRepository->findBy([], ['name' => 'ASC']);
     }
 
-    public function create(UserInterface $user): void
+    public function create(UserInterface $user, string $name, string $userAgent): void
     {
         $apiKey = new ApiKey();
-        $token = (new Token())->getRandomApiToken(36);
+        $token = (new Token())->getRandomApiToken();
+
+        if ($this->getByApiKey($token)) {
+            $token = (new Token())->getRandomApiToken();
+        }
+
         $apiKey
             ->setUser($user)
-            ->setApiKey($token);
+            ->setApiKey($token)
+            ->setName($name)
+            ->setUserAgent($userAgent);
 
         $this->save($apiKey);
     }
