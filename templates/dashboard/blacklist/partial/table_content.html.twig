@@ -4,6 +4,7 @@
             <tr class="fs-14">
                 <th>#</th>
                 <th>{{ 'User'|trans }}</th>
+                <th>{{ 'Api-Key'|trans }}</th>
                 <th>{{ 'Username'|trans }}</th>
                 <th>{{ 'Email'|trans }}</th>
                 <th>{{ 'Domain'|trans }}</th>
@@ -21,6 +22,11 @@
                 <td>
                     <a href="{{path('app_dashboard_user_edit', {id:row.user.id})}}">
                         {{ row.user.name|capitalize }}
+                    </a>
+                </td>
+                <td>
+                    <a href="#" class="text-danger">
+                        {{ row.apiKey.userAgent }}
                     </a>
                 </td>
                 <td>{{ row.username ? row.username|capitalize : '---' }}</td>

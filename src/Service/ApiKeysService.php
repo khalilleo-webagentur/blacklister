@@ -38,7 +38,7 @@ final readonly class ApiKeysService
         return $this->apiKeyRepository->findBy([], ['name' => 'ASC']);
     }
 
-    public function create(UserInterface $user, string $name, string $userAgent): void
+    public function create(UserInterface $user, string $name, string $userAgent): ApiKey
     {
         $apiKey = new ApiKey();
         $token = (new Token())->getRandomApiToken();
@@ -54,6 +54,8 @@ final readonly class ApiKeysService
             ->setUserAgent($userAgent);
 
         $this->save($apiKey);
+
+        return $apiKey;
     }
 
     public function save(ApiKey $apiKey): void

@@ -19,6 +19,9 @@ class BlackList
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'blackLists')]
+    private ?ApiKey $apiKey = null;
+
     #[ORM\Column(length: 200, nullable: true)]
     private ?string $username = null;
 
@@ -70,6 +73,18 @@ class BlackList
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getApiKey(): ?ApiKey
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(?ApiKey $apiKey): static
+    {
+        $this->apiKey = $apiKey;
 
         return $this;
     }

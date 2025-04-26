@@ -77,11 +77,12 @@ final readonly class BlackListService
         return false;
     }
 
-    public function create(UserInterface $user, ?string $username, ?string $email, ?string $domain): void
+    public function create(UserInterface $user, ApiKey $apiKey, ?string $username, ?string $email, ?string $domain): void
     {
         $blackList = new BlackList();
         $blackList
             ->setUser($user)
+            ->setApiKey($apiKey)
             ->setUsername($username)
             ->setEmail($email)
             ->setDomain($domain);

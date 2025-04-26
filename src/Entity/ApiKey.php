@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ApiKeyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,9 +39,16 @@ class ApiKey
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
+    /**
+     * @var Collection<int, BlackList>
+     */
+    #[ORM\OneToMany(targetEntity: BlackList::class, mappedBy: 'apiKey')]
+    private Collection $blackLists;
+
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+        $this->blackLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +136,36 @@ class ApiKey
     public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BlackList>
+     */
+    public function getBlackLists(): Collection
+    {
+        return $this->blackLists;
+    }
+
+    public function addBlackList(BlackList $blackList): static
+    {
+        if (!$this->blackLists->contains($blackList)) {
+            $this->blackLists->add($blackList);
+            $blackList->setApiKey($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlackList(BlackList $blackList): static
+    {
+        if ($this->blackLists->removeElement($blackList)) {
+            // set the owning side to null (unless already changed)
+            if ($blackList->getApiKey() === $this) {
+                $blackList->setApiKey(null);
+            }
+        }
 
         return $this;
     }
