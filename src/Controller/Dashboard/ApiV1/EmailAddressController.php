@@ -45,6 +45,10 @@ class EmailAddressController extends DashboardAbstractController
             return $this->notAuthorizedResponse();
         }
 
+        if (false === $this->hasHeaderUserAgent($request, $api)) {
+            return $this->notAuthorizedResponse();
+        }
+
         $isOnBlackList = $this->blackListService->isEmailOnBlackList($api, $email);
 
         return $this->json([

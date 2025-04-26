@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Dashboard;
 
+use App\Entity\ApiKey;
 use App\Traits\FormValidationTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,21 @@ class DashboardAbstractController extends AbstractController
 
         if (empty($token) || strlen($token) !== 36) {
           return false;
+        }
+
+        return true;
+    }
+
+    protected function hasHeaderUserAgent(Request $request, ApiKey $apiKey): bool
+    {
+        $userAgent = $request->headers->get('User-Agent');
+
+        if (empty($userAgent) || !$request->headers->has('User-Agent')) {
+            return false;
+        }
+
+        if ($userAgent !== $apiKey->getUserAgent()) {
+            return false;
         }
 
         return true;

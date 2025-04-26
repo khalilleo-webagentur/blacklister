@@ -20,7 +20,7 @@ class DomainController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('domain', name: 'app_api_v1_domain', methods: ['POST'])]
+    #[Route('domain', name: 'app_api_v1_domain', methods: ['GET'])]
     public function isDomainOnBlackList(Request $request): Response
     {
         $domain = $request->query->get('domain');
@@ -42,6 +42,10 @@ class DomainController extends DashboardAbstractController
         $api = $this->apiKeysService->getByApiKey($token);
 
         if (!$api) {
+            return $this->notAuthorizedResponse();
+        }
+
+        if (false === $this->hasHeaderUserAgent($request, $api)) {
             return $this->notAuthorizedResponse();
         }
 

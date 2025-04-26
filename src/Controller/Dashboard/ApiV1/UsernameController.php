@@ -45,6 +45,10 @@ class UsernameController extends DashboardAbstractController
             return $this->notAuthorizedResponse();
         }
 
+        if (false === $this->hasHeaderUserAgent($request, $api)) {
+            return $this->notAuthorizedResponse();
+        }
+
         $isOnBlackList = $this->blackListService->isUsernameOnBlackList($api, $username);
 
         return $this->json([
