@@ -22,6 +22,9 @@ class ApiKey
     #[ORM\Column(length: 50)]
     private string $version = 'v1';
 
+    #[ORM\Column(length: 150)]
+    private string $userAgent = "Awesome-App";
+
     #[ORM\Column(length: 255)]
     private string $apiKey = "";
 
@@ -64,6 +67,18 @@ class ApiKey
     public function setVersion(string $version): static
     {
         $this->version = $version;
+
+        return $this;
+    }
+
+    public function getUserAgent(): string
+    {
+        return $this->userAgent;
+    }
+
+    public function setUserAgent(string $userAgent): static
+    {
+        $this->userAgent = $userAgent;
 
         return $this;
     }
