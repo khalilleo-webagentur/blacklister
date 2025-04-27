@@ -45,7 +45,7 @@ class NewAdminCommand extends Command
 
         $faker = Factory::create();
 
-        $email = 'ronijan@posteo.de';
+        $email = $faker->safeEmail();
 
         if (!$this->userService->getByEmail($email)) {
 
