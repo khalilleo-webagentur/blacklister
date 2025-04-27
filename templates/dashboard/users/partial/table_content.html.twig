@@ -1,8 +1,13 @@
 <div class="card-body table-responsive bg-white p-0 mb-3">
+
+    {% set isSuperAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
     <table class="table table-hover text-nowrap">
         <thead>
         <tr class="fs-14">
-            <th>#</th>
+            {% if isSuperAdmin %}
+                <th>#</th>
+            {% endif %}
             <th>{{ 'Name'|trans }}</th>
             <th>{{ 'Email'|trans }}</th>
             <th>{{ 'Token'|trans }}</th>
@@ -16,7 +21,9 @@
         <tbody>
         {% for row in users %}
             <tr class="fs-14">
-                <td>{{ row.id }}</td>
+                {% if isSuperAdmin %}
+                    <td>{{ row.id }}</td>
+                {% endif %}
                 <td>{{ row.name|capitalize }}</td>
                 <td>{{ row.email }}</td>
                 <td>{{ row.token ? row.token : '---' }}</td>
