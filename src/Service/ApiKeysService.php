@@ -21,6 +21,11 @@ final readonly class ApiKeysService
         return $this->apiKeyRepository->findOneBy(['apiKey' => $apiKey]);
     }
 
+    public function getOneByUserAndId(UserInterface $user, int $id): ?ApiKey
+    {
+        return $this->apiKeyRepository->findOneBy(['user' => $user, 'id' => $id]);
+    }
+
     /**
      * @return ApiKey[]
      *

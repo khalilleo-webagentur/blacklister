@@ -27,6 +27,14 @@ final readonly class BlackListService
     /**
      * @return BlackList[]
      */
+    public function getAllByApiKey(ApiKey $apiKey): array
+    {
+        return $this->blackListRepository->findBy(['apiKey' => $apiKey]);
+    }
+
+    /**
+     * @return BlackList[]
+     */
     public function getAll(): array
     {
         return $this->blackListRepository->findBy([], ['id' => 'DESC']);
@@ -34,7 +42,7 @@ final readonly class BlackListService
 
     public function isUsernameOnBlackList(ApiKey $apiKey, string $username): bool
     {
-        $blacklists = $this->getAllByUser($apiKey->getUser());
+        $blacklists = $this->getAllByApiKey($apiKey);
 
         foreach ($blacklists as $blacklist) {
             if ($blacklist->getUsername() === $username) {
@@ -49,7 +57,7 @@ final readonly class BlackListService
 
     public function isEmailOnBlackList(ApiKey $apiKey, string $email): bool
     {
-        $blacklists = $this->getAllByUser($apiKey->getUser());
+        $blacklists = $this->getAllByApiKey($apiKey);
 
         foreach ($blacklists as $blacklist) {
             if ($blacklist->getEmail() === $email) {
@@ -64,7 +72,7 @@ final readonly class BlackListService
 
     public function isDomainOnBlackList(ApiKey $apiKey, string $domain): bool
     {
-        $blacklists = $this->getAllByUser($apiKey->getUser());
+        $blacklists = $this->getAllByApiKey($apiKey);
 
         foreach ($blacklists as $blacklist) {
             if ($blacklist->getDomain() === $domain) {
@@ -77,15 +85,25 @@ final readonly class BlackListService
         return false;
     }
 
-    public function create(UserInterface $user, ApiKey $apiKey, ?string $username, ?string $email, ?string $domain): void
-    {
+    public function create(
+        UserInterface $user,
+        ApiKey $apiKey,
+        ?string $username,
+        ?string $email,
+        ?string $domain,
+        ?string $ip,
+        ?string $url,
+    ): void {
+
         $blackList = new BlackList();
         $blackList
             ->setUser($user)
             ->setApiKey($apiKey)
             ->setUsername($username)
             ->setEmail($email)
-            ->setDomain($domain);
+            ->setDomain($domain)
+            ->setIpAddress($ip)
+            ->setUrl($url);
 
         $this->save($blackList);
     }

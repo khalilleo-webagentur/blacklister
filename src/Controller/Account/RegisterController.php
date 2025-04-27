@@ -116,7 +116,7 @@ class RegisterController extends AbstractController
         );
 
         $apiKey = $this->apiKeysService->create($user, 'Default API Key', 'Awesome-App');
-        $this->blackListService->create($user, $apiKey, 'John_doe', 'j.doe@example.com', 'example.com');
+        $this->blackListService->create($user, $apiKey, 'John_doe', 'j.doe@example.com', 'example.com', null, null);
 
         $this->addFlash('notice', 'Your email address has been verified.');
 
