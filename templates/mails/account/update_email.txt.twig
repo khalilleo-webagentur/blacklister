@@ -1,0 +1,11 @@
+Hi {{ username|capitalize }},
+
+you have requested to update your email on {{ appName() }}, please verify your email.
+
+{{ absolute_url(path('app_profile_personal_data_email_verify', {token:token})) }}.
+
+This link will expire in 30 minutes.
+
+If you did not request this, please ignore this email. Maybe someone has mistyped his email.
+
+Thanks, The {{ appName() }} Team

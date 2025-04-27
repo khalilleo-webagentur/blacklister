@@ -34,6 +34,7 @@ final class AccountConfirmationMail extends AbstractMail implements MailInterfac
             ->to(new address($userEmail, $username))
             ->subject('Email Verification')
             ->htmlTemplate('mails/account/confirmation_email.html.twig')
+            ->textTemplate('mails/account/confirmation_email.txt.twig')
             ->context([
                 'username' => $username,
                 'token' => $token,
