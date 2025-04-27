@@ -6,6 +6,8 @@ namespace App\Command;
 
 use App\Entity\User;
 use App\Entity\UserSetting;
+use App\Service\ApiKeysService;
+use App\Service\BlackListService;
 use App\Service\TokenGeneratorService;
 use App\Service\UserService;
 use App\Service\UserSettingService;
@@ -30,7 +32,9 @@ class NewAdminCommand extends Command
     public function __construct(
         private readonly UserService $userService,
         private readonly TokenGeneratorService $tokenGeneratorService,
-        private readonly UserSettingService $userSettingService
+        private readonly UserSettingService $userSettingService,
+        private readonly ApiKeysService $apiKeysService,
+        private readonly BlackListService $blackListService,
     ) {
         parent::__construct();
     }
@@ -41,7 +45,7 @@ class NewAdminCommand extends Command
 
         $faker = Factory::create();
 
-        $email = $faker->safeEmail();
+        $email = 'ronijan@posteo.de';
 
         if (!$this->userService->getByEmail($email)) {
 
@@ -62,6 +66,16 @@ class NewAdminCommand extends Command
             $userSetting = new UserSetting();
 
             $this->userSettingService->save($userSetting->setUser($user));
+
+            $apiKey = $this->apiKeysService->create($user, 'Default API Key', 'Awesome-App');
+            $this->blackListService->create(
+                $user,
+                $apiKey,
+                'John_doe',
+                'j.doe@example.com',
+                'example.com',
+                '172.0.0.1',
+                'https://example.com');
 
             $output->writeln(sprintf('Dashboard added. E:: %s and OTP:: %s', $email, $code));
 
