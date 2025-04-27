@@ -40,7 +40,8 @@ final class Client
 
         $headers = [
             "Authorization: Bearer $this->bearerToken",
-            "User-Agent: $this->userAgent"
+            "User-Agent: $this->userAgent",
+            'Accept: application/json'
         ];
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
