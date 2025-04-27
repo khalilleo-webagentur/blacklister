@@ -32,7 +32,7 @@
                         <li>Headers > User-Agent: Awesome-App</li>
                     </ul>
                     <p>Example: http://localhost:8080/api/v1/domain?domain=example.com</p>
-                    <pre class="fs-13 text-secondary">
+                    <pre class="fs-13 text-secondary py-0">
 {
   "success": true,
   "message": "on blacklist"
@@ -50,7 +50,7 @@
                         <li>Headers > User-Agent: Awesome-App</li>
                     </ul>
                     <p>Example: http://localhost:8080/api/v1/username?username=johne_doe</p>
-                    <pre class="fs-13 text-secondary">
+                    <pre class="fs-13 text-secondary py-0">
 {
   "success": true,
   "message": "on blacklist"
@@ -68,7 +68,45 @@
                         <li>Headers > User-Agent: Awesome-App</li>
                     </ul>
                     <p>Example: http://localhost:8080/api/v1/email?email=j.doe@example.com</p>
-                    <pre class="fs-13 text-secondary">
+                    <pre class="fs-13 text-secondary py-0">
+{
+  "success": true,
+  "message": "on blacklist"
+}
+                    </pre>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5>IP-Address</h5>
+                    <ul class="fs-14">
+                        <li>Method: GET</li>
+                        <li>Authorization type: Bearer Token Example: eadd5e27-c6b0-4e8c-8272-54554767cc0e</li>
+                        <li>Headers > User-Agent: Awesome-App</li>
+                    </ul>
+                    <p>Example: http://localhost:8080/api/v1/ip?ip=127.0.0.1</p>
+                    <pre class="fs-13 text-secondary py-0">
+{
+  "success": true,
+  "message": "on blacklist"
+}
+                    </pre>
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h5>URL</h5>
+                    <ul class="fs-14">
+                        <li>Method: GET</li>
+                        <li>Authorization type: Bearer Token Example: eadd5e27-c6b0-4e8c-8272-54554767cc0e</li>
+                        <li>Headers > User-Agent: Awesome-App</li>
+                    </ul>
+                    <p>Example: http://localhost:8080/api/v1/url?url=https://example.com</p>
+                    <pre class="fs-13 text-secondary py-0">
 {
   "success": true,
   "message": "on blacklist"
