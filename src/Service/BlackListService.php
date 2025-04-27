@@ -100,6 +100,21 @@ final readonly class BlackListService
         return false;
     }
 
+    public function isURLOnBlackList(ApiKey $apiKey, string $url): bool
+    {
+        $blacklists = $this->getAllByApiKey($apiKey);
+
+        foreach ($blacklists as $blacklist) {
+            if ($blacklist->getUrl() === $url) {
+                $countUrlBlocked = $blacklist->getCountUrlBlocked();
+                $this->save($blacklist->setCountUrlBlocked($countUrlBlocked + 1));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function create(
         UserInterface $user,
         ApiKey $apiKey,
