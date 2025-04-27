@@ -4,29 +4,29 @@
 
     <table class="table table-hover text-nowrap">
         <thead>
-            <tr class="fs-14">
-                {% if isSuperAdmin %}
-                    <th>#</th>
-                    <th>{{ 'User'|trans }}</th>
-                {% endif %}
-                <th>{{ 'Api-Key'|trans }}</th>
-                <th>{{ 'Username'|trans }}</th>
-                <th>{{ 'Email'|trans }}</th>
-                <th>{{ 'Domain'|trans }}</th>
-                <th>{{ 'IP'|trans }}</th>
-                <th>{{ 'URL'|trans }}</th>
-                <th>{{ 'Updated'|trans }}</th>
-                <th>{{ 'Created'|trans }}</th>
-                <th>{{ 'Action'|trans }}</th>
-            </tr>
+        <tr class="fs-14">
+            {% if isSuperAdmin %}
+                <th>#</th>
+                <th>{{ 'User'|trans }}</th>
+            {% endif %}
+            <th>{{ 'Api-Key'|trans }}</th>
+            <th>{{ 'Username'|trans }}</th>
+            <th>{{ 'Email'|trans }}</th>
+            <th>{{ 'Domain'|trans }}</th>
+            <th>{{ 'IP'|trans }}</th>
+            <th>{{ 'URL'|trans }}</th>
+            <th>{{ 'Updated'|trans }}</th>
+            <th>{{ 'Created'|trans }}</th>
+            <th>{{ 'Action'|trans }}</th>
+        </tr>
         </thead>
         <tbody>
-            {% for row in blacklists %}
+        {% for row in blacklists %}
             <tr class="fs-14">
                 {% if isSuperAdmin %}
                     <td>{{ row.id }}</td>
                     <td>
-                        <a href="{{path('app_dashboard_user_edit', {id:row.user.id})}}">
+                        <a href="{{ path('app_dashboard_user_edit', {id:row.user.id}) }}">
                             {{ row.user.name|capitalize }}
                         </a>
                     </td>
@@ -51,7 +51,7 @@
                     </a>
                 </td>
             </tr>
-            {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 </div>
