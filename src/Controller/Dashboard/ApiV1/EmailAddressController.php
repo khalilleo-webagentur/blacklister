@@ -20,7 +20,7 @@ class EmailAddressController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('email', name: 'app_api_v1_email', methods: ['POST'])]
+    #[Route('email', name: 'app_api_v1_email', methods: ['GET'])]
     public function isEmailOnBlackList(Request $request): Response
     {
         $email = $request->get('email');

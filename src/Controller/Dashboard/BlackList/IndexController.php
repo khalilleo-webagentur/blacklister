@@ -56,7 +56,7 @@ class IndexController extends DashboardAbstractController
         $url = $this->validate($request->request->get('url'));
         $apiKeyId = $this->validateNumber($request->request->get('apiKey'));
 
-        if (empty($username) && empty($email) && empty($domain) && empty($ipAddress) && empty($url)) {
+        if (empty($username) && empty($email) && empty($domain) && empty($ipAddress) && empty($url) && $apiKeyId <= 0) {
             $this->addFlash('warning', 'At least on of them must be filled.');
             return $this->redirectToRoute(self::DASHBOARD_BLACKLISTS);
         }

@@ -20,7 +20,7 @@ class UsernameController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('username', name: 'app_api_v1_username', methods: ['POST'])]
+    #[Route('username', name: 'app_api_v1_username', methods: ['GET'])]
     public function isUsernameOnBlackList(Request $request): Response
     {
         $username = $request->get('username');
