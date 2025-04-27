@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('api/v1/')]
-class DomainController extends DashboardAbstractController
+class IPAddressController extends DashboardAbstractController
 {
     public function __construct(
         private readonly ApiKeysService   $apiKeysService,
@@ -20,13 +20,13 @@ class DomainController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('domain', name: 'app_api_v1_domain', methods: ['GET'])]
-    public function isDomainOnBlackList(Request $request): Response
+    #[Route('ip', name: 'app_api_v1_ips_index', methods: ['GET'])]
+    public function isIPAddressOnBlackList(Request $request): Response
     {
-        $domain = $request->query->get('domain');
+        $domain = $request->query->get('ip');
 
         if ($this->isFieldEmpty($domain)) {
-            return $this->fieldIsRequiredResponse('domain');
+            return $this->fieldIsRequiredResponse('ip');
         }
 
         if (false === $this->isApiKeyValid($request)) {
@@ -49,7 +49,7 @@ class DomainController extends DashboardAbstractController
             return $this->notAuthorizedResponse();
         }
 
-        $isOnBlackList = $this->blackListService->isDomainOnBlackList($api, $domain);
+        $isOnBlackList = $this->blackListService->isIPAddressOnBlackList($api, $domain);
 
         return $this->json([
             'success' => $isOnBlackList,

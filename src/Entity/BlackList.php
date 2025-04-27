@@ -44,6 +44,9 @@ class BlackList
     private int $countEmailBlocked = 0;
 
     #[ORM\Column]
+    private int $countIpAddressBlocked = 0;
+
+    #[ORM\Column]
     private int $countDomainBlocked = 0;
 
     #[ORM\Column]
@@ -169,6 +172,18 @@ class BlackList
     public function setCountEmailBlocked(int $countEmailBlocked): static
     {
         $this->countEmailBlocked = $countEmailBlocked;
+
+        return $this;
+    }
+
+    public function getCountIpAddressBlocked(): int
+    {
+        return $this->countIpAddressBlocked;
+    }
+
+    public function setCountIpAddressBlocked(int $countIpAddressBlocked): static
+    {
+        $this->countIpAddressBlocked = $countIpAddressBlocked;
 
         return $this;
     }

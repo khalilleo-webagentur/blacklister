@@ -85,6 +85,21 @@ final readonly class BlackListService
         return false;
     }
 
+    public function isIPAddressOnBlackList(ApiKey $apiKey, string $ipAddress): bool
+    {
+        $blacklists = $this->getAllByApiKey($apiKey);
+
+        foreach ($blacklists as $blacklist) {
+            if ($blacklist->getIpAddress() === $ipAddress) {
+                $countIpBlocked = $blacklist->getCountIpAddressBlocked();
+                $this->save($blacklist->setCountIpAddressBlocked($countIpBlocked + 1));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function create(
         UserInterface $user,
         ApiKey $apiKey,
