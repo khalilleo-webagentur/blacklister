@@ -138,6 +138,29 @@ final readonly class BlackListService
         $this->save($blackList);
     }
 
+    public function getStatistics(UserInterface $user): array
+    {
+        $blacklists = $this->getAllByUser($user);
+
+        $username = $email = $domain = $ip = $url = 0;
+
+        foreach ($blacklists as $blacklist) {
+            $username += $blacklist->getCountUsernameBlocked();
+            $domain += $blacklist->getCountDomainBlocked();
+            $email += $blacklist->getCountEmailBlocked();
+            $ip += $blacklist->getCountIpAddressBlocked();
+            $url += $blacklist->getCountUrlBlocked();
+        }
+
+        return [
+            'username' => $username,
+            'email' => $email,
+            'domain' => $domain,
+            'ip' => $ip,
+            'url' => $url,
+        ];
+    }
+
     public function save(BlackList $blackList): BlackList
     {
         $this->blackListRepository->save($blackList->setUpdatedAt(new \DateTime()), true);
