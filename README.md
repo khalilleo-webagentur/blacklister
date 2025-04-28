@@ -24,24 +24,56 @@ final class Client
     ) {
     }
 
-    public function isOnBlackList(string $path): bool
+    public function isUsernameOnBlackList(string $username): bool
     {
-        $this->url = $this->url . $path;
-        $response = $this->get();
+        $this->url = $this->url .'username?username='. $username;
+        $response = $this->getResponse();
 
         return $response->success;
     }
 
-    private function get(): stdClass
+    public function isEmailOnBlackList(string $email): bool
+    {
+        $this->url = $this->url .'email?email='. $email;
+        $response = $this->getResponse();
+
+        return $response->success;
+    }
+
+    public function isDomainOnBlackList(string $domain): bool
+    {
+        $this->url = $this->url .'domain?domain='. $domain;
+        $response = $this->getResponse();
+
+        return $response->success;
+    }
+
+    public function isIPAddressOnBlackList(string $ip): bool
+    {
+        $this->url = $this->url .'ip?ip='. $ip;
+        $response = $this->getResponse();
+
+        return $response->success;
+    }
+
+    public function isURLOnBlackList(string $url): bool
+    {
+        $this->url = $this->url .'url?url='. $url;
+        $response = $this->getResponse();
+
+        return $response->success;
+    }
+
+    private function getResponse(): stdClass
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'getResponse');
 
         $headers = [
             "Authorization: Bearer $this->bearerToken",
-            "User-Agent: $this->userAgent",
-            'Accept: application/json'
+            'Accept: application/json',
+            "User-Agent: $this->userAgent"
         ];
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -63,11 +95,11 @@ $bearerToken = 'your-bearer-token';
 $userAgent = 'your-user-agent';
 
 $client = new Client($url, $bearerToken, $userAgent);
-//$isUsernameOnBlackList = $client->isOnBlackList('username?username=John_doe');
-//$isDomainOnBlackList = $client->isOnBlackList('domain?domain=example.com');
-$isEmailOnBlackList = $client->isOnBlackList('email?email=j.doe@example.com');
-//$isIpAddressOnBlackList = $client->isOnBlackList('ip?ip=172.0.01');
-//$isURLOnBlackList = $client->isOnBlackList('url?url=https://example.com');
+// $isUsernameOnBlackList = $client->isUsernameOnBlackList('John_doe');
+// $isDomainOnBlackList = $client->isDomainOnBlackList('example.com');
+$isEmailOnBlackList = $client->isEmailOnBlackList('j.doe@example.com');
+// $isIpAddressOnBlackList = $client->isIPAddressOnBlackList('172.0.01');
+// $isURLOnBlackList = $client->isURLOnBlackList('https://example.com');
 
 echo $isEmailOnBlackList ? 'TRUE' : 'FALSE';
 ```
