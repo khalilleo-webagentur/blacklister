@@ -1,0 +1,77 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard API-Key Details {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <h5 class="m-0 text-dark mt-1">API-Key Details</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="breadcrumb float-right">
+                            <div class="breadcrumb float-right">
+                                <a href="{{ path('app_dashboard_api_keys_index') }}" class="text-secondary">
+                                    Close <span class="fa fa-window-close"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+                <form action="{{ path('app_dashboard_api_key_store', {id:apiKey.id}) }}" method="post">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="iO7nM4yT4bG2sO5itt" class="form-label">
+                                            Name <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5itt"
+                                               value="{{ apiKey.name }}"
+                                               name="name"
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="eO7nM4yT4bG2sO5itt" class="form-label">
+                                            User-Agent <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" id="eO7nM4yT4bG2sO5itt"
+                                               value="{{ apiKey.userAgent }}"
+                                               name="userAgent"
+                                               required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="up7nM4yT4bG2sO5itt" class="form-label">
+                                    Secret <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" class="form-control" id="up7nM4yT4bG2sO5itt"
+                                       value="{{ apiKey.apiKey }}"
+                                       name="secret"
+                                       required>
+                            </div>
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

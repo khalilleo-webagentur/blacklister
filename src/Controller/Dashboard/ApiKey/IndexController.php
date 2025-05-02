@@ -7,6 +7,7 @@ namespace App\Controller\Dashboard\ApiKey;
 use App\Controller\Dashboard\DashboardAbstractController;
 use App\Service\ApiKeysService;
 use App\Traits\FormValidationTrait;
+use Khalilleo\TokenGen\Token;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -62,6 +63,79 @@ class IndexController extends DashboardAbstractController
         $user = $this->getUser();
         $userAgent = $this->formatUserAgent($userAgent);
         $this->apiKeysService->create($user, $name, $userAgent);
+
+        $this->addFlash('success', 'Api key created.');
+
+        return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
+    }
+
+    #[Route('/a0h5a7t0l1w2/{id}', name: 'app_dashboard_api_key_view')]
+    public function edit(?string $id): Response
+    {
+        $this->hasRoleAdmin();
+
+        $user = $this->getUser();
+        $id = $this->validateNumber($id);
+
+        $apiKey = $this->isSuperAdmin()
+            ? $this->apiKeysService->getById($id)
+            : $this->apiKeysService->getOneByUserAndId($user, $id);
+
+        if (!$apiKey) {
+            $this->addFlash('warning', 'Api key not found.');
+            return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
+        }
+
+        return $this->render('dashboard/api-keys/edit.html.twig', [
+            'apiKey' => $apiKey,
+        ]);
+    }
+
+    #[Route('/sts3n5n6s7x6/{id}', name: 'app_dashboard_api_key_store', methods: ['POST'])]
+    public function store(?string $id, Request $request): Response
+    {
+        $this->hasRoleAdmin();
+
+        $name = $this->validate($request->request->get('name'));
+        $userAgent = $this->validate($request->request->get('userAgent'));
+        $secret = $this->validate($request->request->get('secret'));
+
+        if (empty($name) || empty($userAgent) || empty($secret)) {
+            $this->addFlash('warning', 'All fields are required.');
+            return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
+        }
+
+        $user = $this->getUser();
+
+        if (count($this->apiKeysService->getAllByUser($user)) > 3 && !$this->isSuperAdmin()) {
+            $this->addFlash('warning', 'You cannot add more than 3 keys.');
+            return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
+        }
+
+        $id = $this->validateNumber($id);
+        $user = $this->getUser();
+
+        $apiKey = $this->isSuperAdmin()
+            ? $this->apiKeysService->getById($id)
+            : $this->apiKeysService->getOneByUserAndId($user, $id);
+
+        if (!$apiKey) {
+            $this->addFlash('warning', 'Api key not found.');
+            return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
+        }
+
+        if ($secret !== $apiKey->getApiKey() && $this->apiKeysService->getByApiKey($secret)) {
+            $this->addFlash('warning', 'Api key cannot be used. Invalid format.');
+            return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
+        }
+
+        $userAgent = $this->formatUserAgent($userAgent);
+        $this->apiKeysService->save(
+            $apiKey
+                ->setName($name)
+                ->setUserAgent($userAgent)
+                ->setApiKey($secret)
+        );
 
         $this->addFlash('success', 'Api key created.');
 
