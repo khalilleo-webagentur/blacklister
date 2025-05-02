@@ -1,0 +1,95 @@
+{% extends 'dashboard/layout/base.html.twig' %}
+
+{% block title %} Dashboard Blacklist Details {% endblock %}
+
+{% block body %}
+
+    <div class="content-wrapper">
+
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 class="m-0 text-dark mt-1">Blacklist Details</h5>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="breadcrumb float-right">
+                            <div class="breadcrumb float-right">
+                                <a href="{{ path('app_dashboard_blacklist_index') }}" class="text-secondary">
+                                    Close <span class="fa fa-window-close"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container-fluid area-section">
+                <form action="{{ path('app_dashboard_blacklist_store', {id:blacklist.id}) }}" method="post">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="iO7nM4yT4bG2sO5itt" class="form-label">
+                                            Username
+                                        </label>
+                                        <input type="text" class="form-control" id="iO7nM4yT4bG2sO5itt"
+                                               value="{{ blacklist.username }}"
+                                               name="username">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="eO7nM4yT4bG2sO5itt" class="form-label">
+                                            E-mail address
+                                        </label>
+                                        <input type="email" class="form-control" id="eO7nM4yT4bG2sO5itt"
+                                               value="{{ blacklist.email }}"
+                                               name="email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="dO7nM4yT4bG2sO5itt" class="form-label">
+                                            Domain
+                                        </label>
+                                        <input type="text" class="form-control" id="dO7nM4yT4bG2sO5itt"
+                                               value="{{ blacklist.domain }}"
+                                               name="domain">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="ip7nM4yT4bG2sO5itt" class="form-label">
+                                            IP-Address
+                                        </label>
+                                        <input type="text" class="form-control" id="ip7nM4yT4bG2sO5itt"
+                                               value="{{ blacklist.ipAddress }}"
+                                               name="ip">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="up7nM4yT4bG2sO5itt" class="form-label">
+                                    URL
+                                </label>
+                                <input type="text" class="form-control" id="up7nM4yT4bG2sO5itt"
+                                       value="{{ blacklist.url }}"
+                                       name="url">
+                            </div>
+
+                            {% include "dashboard/component/edit_save_btn.html.twig" %}
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}

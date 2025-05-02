@@ -75,4 +75,64 @@ class IndexController extends DashboardAbstractController
 
         return $this->redirectToRoute(self::DASHBOARD_BLACKLISTS);
     }
+
+    #[Route('/s0h7a6t0l2wl/{id?}', name: 'app_dashboard_blacklist_view')]
+    public function edit(?string $id): Response
+    {
+        $this->hasRoleAdmin();
+
+        $user = $this->getUser();
+
+        $id = $this->validateNumber($id);
+
+        $blacklist = $this->isSuperAdmin()
+            ? $this->blackListService->getOneById($id)
+            : $this->blackListService->getOneByUserAndId($user, $id);
+
+        return $this->render('dashboard/blacklist/edit.html.twig', [
+            'blacklist' => $blacklist,
+        ]);
+    }
+
+    #[Route('/s3v1t3e2jrb3/{id}', name: 'app_dashboard_blacklist_store', methods: ['POST'])]
+    public function store(?string $id, Request $request): Response
+    {
+        $this->hasRoleAdmin();
+
+        $username = $this->validate($request->request->get('username'));
+        $email = $this->validate($request->request->get('email'));
+        $domain = $this->validate($request->request->get('domain'));
+        $ipAddress = $this->validate($request->request->get('ip'));
+        $url = $this->validate($request->request->get('url'));
+
+        if (empty($username) && empty($email) && empty($domain) && empty($ipAddress) && empty($url)) {
+            $this->addFlash('warning', 'At least on of them must be filled.');
+            return $this->redirectToRoute(self::DASHBOARD_BLACKLISTS);
+        }
+
+        $user = $this->getUser();
+        $id = $this->validateNumber($id);
+
+        $blacklist = $this->isSuperAdmin()
+            ? $this->blackListService->getOneById($id)
+            : $this->blackListService->getOneByUserAndId($user, $id);
+
+        if (!$blacklist) {
+            $this->addFlash('warning', 'Blacklist could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_BLACKLISTS);
+        }
+
+        $this->blackListService->save(
+            $blacklist
+                ->setUsername($username)
+                ->setEmail($email)
+                ->setDomain($domain)
+                ->setIpAddress($ipAddress)
+                ->setUrl($url)
+        );
+
+        $this->addFlash('success', 'Blacklist has been updated successfully.');
+
+        return $this->redirectToRoute(self::DASHBOARD_BLACKLISTS);
+    }
 }

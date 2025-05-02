@@ -16,6 +16,16 @@ final readonly class BlackListService
     ) {
     }
 
+    public function getOneById(int $id): ?BlackList
+    {
+        return $this->blackListRepository->findOneBy(['id' => $id]);
+    }
+
+    public function getOneByUserAndId(UserInterface $user, int $id): ?BlackList
+    {
+        return $this->blackListRepository->findOneBy(['user' => $user, 'id' => $id]);
+    }
+
     /**
      * @return BlackList[]
      */

@@ -46,9 +46,15 @@
                 <td title="{{ timeAgo(row.createdAt) }}">{{ row.createdAt|date }}</td>
 
                 <td>
-                    <a href="#" class="text-danger">
-                        <span class="fa fa-edit fa-sm"></span>
-                    </a>
+                    {% if isSuperAdmin %}
+                        <a href="{{ path('app_dashboard_blacklist_view', {id:row.id}) }}">
+                            <span class="fa fa-edit fa-sm"></span>
+                        </a>
+                    {% else %}
+                        <a href="#" class="text-danger">
+                            <span class="fa fa-edit fa-sm"></span>
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
