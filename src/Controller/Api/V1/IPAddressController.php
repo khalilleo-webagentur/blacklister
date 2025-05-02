@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Dashboard\ApiV1;
+namespace App\Controller\Api\V1;
 
 use App\Controller\Dashboard\DashboardAbstractController;
 use App\Service\ApiKeysService;

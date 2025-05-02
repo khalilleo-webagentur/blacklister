@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Dashboard\ApiV1;
+namespace App\Controller\Api\V1;
 
 use App\Controller\Dashboard\DashboardAbstractController;
 use App\Service\ApiKeysService;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('api/v1/')]
-class EmailAddressController extends DashboardAbstractController
+class DomainController extends DashboardAbstractController
 {
     public function __construct(
         private readonly ApiKeysService   $apiKeysService,
@@ -20,13 +20,13 @@ class EmailAddressController extends DashboardAbstractController
     ) {
     }
 
-    #[Route('email', name: 'app_api_v1_email', methods: ['GET'])]
-    public function isEmailOnBlackList(Request $request): Response
+    #[Route('domain', name: 'app_api_v1_domain', methods: ['GET'])]
+    public function isDomainOnBlackList(Request $request): Response
     {
-        $email = $request->get('email');
+        $domain = $request->query->get('domain');
 
-        if (empty($email)) {
-            return $this->fieldIsRequiredResponse('email');
+        if ($this->isFieldEmpty($domain)) {
+            return $this->fieldIsRequiredResponse('domain');
         }
 
         if (false === $this->isApiKeyValid($request)) {
@@ -49,7 +49,7 @@ class EmailAddressController extends DashboardAbstractController
             return $this->notAuthorizedResponse();
         }
 
-        $isOnBlackList = $this->blackListService->isEmailOnBlackList($api, $email);
+        $isOnBlackList = $this->blackListService->isDomainOnBlackList($api, $domain);
 
         return $this->json([
             'success' => $isOnBlackList,
