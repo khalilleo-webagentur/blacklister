@@ -27,7 +27,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/k0h5a6t0l1w2', name: 'app_dashboard_api_keys_index')]
     public function index(): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $user = $this->getUser();
 
@@ -43,7 +43,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/p3s3n5n6s6x6', name: 'app_dashboard_api_keys_new', methods: ['POST'])]
     public function new(Request $request): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $name = $this->validate($request->request->get('name'));
         $userAgent = $this->validate($request->request->get('userAgent'));
@@ -72,7 +72,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/a0h5a7t0l1w2/{id}', name: 'app_dashboard_api_key_view')]
     public function edit(?string $id): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $user = $this->getUser();
         $id = $this->validateNumber($id);
@@ -94,7 +94,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/sts3n5n6s7x6/{id}', name: 'app_dashboard_api_key_store', methods: ['POST'])]
     public function store(?string $id, Request $request): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $name = $this->validate($request->request->get('name'));
         $userAgent = $this->validate($request->request->get('userAgent'));

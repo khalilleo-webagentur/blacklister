@@ -14,7 +14,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/doh5a6t0l1w2', name: 'app_dashboard_documentation_index')]
     public function index(): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         return $this->render('dashboard/documentation/index.html.twig');
     }

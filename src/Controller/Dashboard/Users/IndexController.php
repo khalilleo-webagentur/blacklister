@@ -27,7 +27,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/users/home', name: 'app_dashboard_users_index')]
     public function index(): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $users = $this->isSuperAdmin()
             ? $this->userService->getAll()
@@ -41,11 +41,11 @@ class IndexController extends DashboardAbstractController
     #[Route('/user/edit/{id}', name: 'app_dashboard_user_edit')]
     public function edit(?string $id): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
-        $user = $this->userService->getById(
-            $this->validateNumber($id)
-        );
+        $user = $this->isSuperAdmin()
+            ? $this->userService->getById($this->validateNumber($id))
+            : $this->getUser();
 
         if (!$user) {
             $this->addFlash('warning', 'User could not be found.');
@@ -60,7 +60,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/user/store/{id}', name: 'app_dashboard_user_store', methods: 'POST')]
     public function store(?string $id, Request $request): RedirectResponse
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $name = $this->validate($request->request->get('name'));
 
@@ -73,9 +73,9 @@ class IndexController extends DashboardAbstractController
 
         $token = $this->validate($request->request->get('token'));
 
-        $user = $this->userService->getById(
-            $this->validateNumber($id)
-        );
+        $user = $this->isSuperAdmin()
+            ? $this->userService->getById($this->validateNumber($id))
+            : $this->getUser();
 
         if (!$user) {
             $this->addFlash('warning', 'User could not be found.');
@@ -91,8 +91,8 @@ class IndexController extends DashboardAbstractController
         $isDeleted = $this->validateCheckbox($request->request->get('isDeleted'));
 
         if ($isDeleted) {
-            $isVerified = false;
             $token = null;
+            $this->addFlash('warning', 'you cannot login once again. You have activated isDeleted flag.');
         }
 
         $this->userService->save(

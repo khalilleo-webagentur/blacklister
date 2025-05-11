@@ -86,7 +86,7 @@ class DashboardAbstractController extends AbstractController
         return $this->isGranted('ROLE_SUPER_ADMIN');
     }
 
-    protected function hasRoleAdmin(): void
+    protected function hasRoleUser(): void
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
     }

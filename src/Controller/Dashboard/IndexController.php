@@ -19,7 +19,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/home', name: 'app_dashboard_index')]
     public function index(): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $user = $this->getUser();
 

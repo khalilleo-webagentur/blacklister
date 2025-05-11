@@ -28,7 +28,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/w0h5a6t0l1w2', name: 'app_dashboard_blacklist_index')]
     public function index(): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $user = $this->getUser();
 
@@ -47,7 +47,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/d3v1h3e2j4b3', name: 'app_dashboard_blacklist_new', methods: ['POST'])]
     public function new(Request $request): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $username = $this->validate($request->request->get('username'));
         $email = $this->validate($request->request->get('email'));
@@ -79,7 +79,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/s0h7a6t0l2wl/{id?}', name: 'app_dashboard_blacklist_view')]
     public function edit(?string $id): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $user = $this->getUser();
 
@@ -97,7 +97,7 @@ class IndexController extends DashboardAbstractController
     #[Route('/s3v1t3e2jrb3/{id}', name: 'app_dashboard_blacklist_store', methods: ['POST'])]
     public function store(?string $id, Request $request): Response
     {
-        $this->hasRoleAdmin();
+        $this->hasRoleUser();
 
         $username = $this->validate($request->request->get('username'));
         $email = $this->validate($request->request->get('email'));
