@@ -1,3 +1,4 @@
+{% set isSuperAdmin = is_granted('ROLE_SUPER_ADMIN') %}
 <nav class="main-header navbar navbar-expand navbar-light">
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -27,22 +28,25 @@
         <li class="mr-3 nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
+                <span class="badge badge-warning navbar-badge">
+                    {{ isSuperAdmin ? '15' : '0' }}
+                </span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">Notifications</span>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-file mr-2"></i> 3 new reports
-                    <span class="float-right text-muted text-sm">2 days</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                {% if isSuperAdmin %}
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                {% else %}
+                    <span class="dropdown-item fs-13 text-secondary text-center">
+                        No Notification arrived.
+                    </span>
+                {% endif %}
             </div>
         </li>
     </ul>
