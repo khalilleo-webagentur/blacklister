@@ -32,9 +32,13 @@
                     </td>
                 {% endif %}
                 <td>
-                    <a href="#" class="text-danger">
+                    {% if isSuperAdmin %}
+                        <a href="{{ path('app_dashboard_api_key_view', {id:row.apiKey.id}) }}">
+                            {{ row.apiKey.userAgent }}
+                        </a>
+                    {% else %}
                         {{ row.apiKey.userAgent }}
-                    </a>
+                    {% endif %}
                 </td>
                 <td>{{ row.username ? row.username|capitalize : '---' }}</td>
                 <td>{{ row.email ? row.email : '---' }}</td>
