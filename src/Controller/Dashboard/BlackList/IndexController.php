@@ -82,12 +82,16 @@ class IndexController extends DashboardAbstractController
         $this->hasRoleUser();
 
         $user = $this->getUser();
-
         $id = $this->validateNumber($id);
 
         $blacklist = $this->isSuperAdmin()
             ? $this->blackListService->getOneById($id)
             : $this->blackListService->getOneByUserAndId($user, $id);
+
+        if (!$blacklist) {
+            $this->addFlash('warning', 'Blacklist could not be found.');
+            return $this->redirectToRoute(self::DASHBOARD_BLACKLISTS);
+        }
 
         return $this->render('dashboard/blacklist/edit.html.twig', [
             'blacklist' => $blacklist,
