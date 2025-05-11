@@ -7,7 +7,6 @@ namespace App\Controller\Dashboard\ApiKey;
 use App\Controller\Dashboard\DashboardAbstractController;
 use App\Service\ApiKeysService;
 use App\Traits\FormValidationTrait;
-use Khalilleo\TokenGen\Token;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -55,8 +54,8 @@ class IndexController extends DashboardAbstractController
 
         $user = $this->getUser();
 
-        if (count($this->apiKeysService->getAllByUser($user)) > 3 && !$this->isSuperAdmin()) {
-            $this->addFlash('warning', 'You cannot add more than 3 keys.');
+        if (count($this->apiKeysService->getAllByUser($user)) >= 3 && !$this->isSuperAdmin()) {
+            $this->addFlash('warning', 'You cannot add more than 3 API-Secrets.');
             return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
         }
 
@@ -107,13 +106,12 @@ class IndexController extends DashboardAbstractController
 
         $user = $this->getUser();
 
-        if (count($this->apiKeysService->getAllByUser($user)) > 3 && !$this->isSuperAdmin()) {
-            $this->addFlash('warning', 'You cannot add more than 3 keys.');
+        if (count($this->apiKeysService->getAllByUser($user)) >= 3 && !$this->isSuperAdmin()) {
+            $this->addFlash('warning', 'You cannot add more than 3 API-Secrets.');
             return $this->redirectToRoute(self::DASHBOARD_API_KEYS);
         }
 
         $id = $this->validateNumber($id);
-        $user = $this->getUser();
 
         $apiKey = $this->isSuperAdmin()
             ? $this->apiKeysService->getById($id)
@@ -134,7 +132,7 @@ class IndexController extends DashboardAbstractController
             $apiKey
                 ->setName($name)
                 ->setUserAgent($userAgent)
-                ->setApiKey($secret)
+                ->setApiKey($this->isSuperAdmin() ? $secret : $apiKey->getApiKey())
         );
 
         $this->addFlash('success', 'Api key created.');

@@ -6,6 +6,8 @@
 
     <div class="content-wrapper">
 
+        {% set isSuperAdmin = is_granted('ROLE_SUPER_ADMIN') %}
+
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row">
@@ -59,10 +61,16 @@
                                 <label for="up7nM4yT4bG2sO5itt" class="form-label">
                                     Secret <span class="text-danger">*</span>
                                 </label>
-                                <input type="text" class="form-control" id="up7nM4yT4bG2sO5itt"
+                                <input type="text"
+                                       class="form-control"
+                                       id="up7nM4yT4bG2sO5itt"
                                        value="{{ apiKey.apiKey }}"
+                                       {{ isSuperAdmin ? '' : 'readonly' }}
                                        name="secret"
                                        required>
+                                <small class="text-secondary">
+                                    {{ isSuperAdmin ? 'Secrect must have the same formt.' : 'Secret cannot be changed.' }}
+                                </small>
                             </div>
 
                             {% include "dashboard/component/edit_save_btn.html.twig" %}

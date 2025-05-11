@@ -43,15 +43,9 @@
                 <td title="{{ timeAgo(row.createdAt) }}">{{ row.createdAt|date }}</td>
 
                 <td>
-                    {% if isSuperAdmin %}
-                        <a href="{{ path('app_dashboard_api_key_view', {id:row.id}) }}">
-                            <span class="fa fa-edit fa-sm"></span>
-                        </a>
-                    {% else %}
-                        <a href="#" class="text-danger">
-                            <span class="fa fa-edit fa-sm"></span>
-                        </a>
-                    {% endif %}
+                    <a href="{{ path('app_dashboard_api_key_view', {id:row.id}) }}">
+                        <span class="fa fa-edit fa-sm"></span>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
