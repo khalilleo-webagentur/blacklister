@@ -1,7 +1,19 @@
 Hi {{ username|capitalize }},
 
-Your OTP (one time password) is: {{ otp }}
+Your OTP (one time password) is:
+
+{{ otp }}
 
 Please do not share your OTP with anyone.
 
-Thanks, The {{ appName() }} Team
+Best Regards,
+
+The {{ appName() }} Team
+
+...................................................................
+
+Homepage: {{ absolute_url(path('app_home')) }}
+Datenschutzerklärung: {{ absolute_url(path('app_legal_privacy_policy')) }}
+{{ 'Have a question or need Help?'|trans }}: {{ absolute_url(path('app_contact_us_index')) }}
+
+Copyright {{ appName() }} {{ year() }} - {{ 'All Rights Reserved'|trans }} - {{ version() }}
