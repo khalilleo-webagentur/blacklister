@@ -40,11 +40,55 @@
                         {{ row.apiKey.userAgent }}
                     {% endif %}
                 </td>
-                <td>{{ row.username ? row.username|capitalize : '---' }}</td>
-                <td>{{ row.email ? row.email : '---' }}</td>
-                <td>{{ row.domain ? row.domain : '---' }}</td>
-                <td>{{ row.ipAddress ? row.ipAddress : '---' }}</td>
-                <td>{{ row.url ? row.url : '---' }}</td>
+                <td>
+                    {{ row.username ? row.username|capitalize : '---' }}
+
+                    {% if row.countUsernameBlocked > 0 %}
+                        <sup class="small text-danger"
+                             title="{{ row.countUsernameBlocked }} times username blocked">
+                            <small>({{ formatNumber(row.countUsernameBlocked) }})</small>
+                        </sup>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ row.email ? row.email : '---' }}
+
+                    {% if row.countEmailBlocked > 0 %}
+                        <sup class="small text-danger"
+                             title="{{ row.countEmailBlocked }} times email blocked">
+                            <small>({{ formatNumber(row.countEmailBlocked) }})</small>
+                        </sup>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ row.domain ? row.domain : '---' }}
+
+                    {% if row.countDomainBlocked > 0 %}
+                        <sup class="small text-danger"
+                             title="{{ row.countDomainBlocked }} times domain blocked">
+                            <small>({{ formatNumber(row.countDomainBlocked) }})</small>
+                        </sup>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ row.ipAddress ? row.ipAddress : '---' }}
+
+                    {% if row.countIpAddressBlocked > 0 %}
+                        <sup class="small text-danger" title="{{ row.countIpAddressBlocked }} times IP-Address blocked">
+                            <small>({{ formatNumber(row.countIpAddressBlocked) }})</small>
+                        </sup>
+                    {% endif %}
+                </td>
+                <td>
+                    {{ row.url ? row.url : '---' }}
+
+                    {% if row.countUrlBlocked > 0 %}
+                        <sup class="small text-danger"
+                             title="{{ row.countUrlBlocked }} times URL blocked">
+                            <small>({{ formatNumber(row.countUrlBlocked) }})</small>
+                        </sup>
+                    {% endif %}
+                </td>
 
                 <td title="{{ timeAgo(row.updatedAt) }}">{{ row.updatedAt|date }}</td>
                 <td title="{{ timeAgo(row.createdAt) }}">{{ row.createdAt|date }}</td>

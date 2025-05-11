@@ -21,6 +21,7 @@ class TwigHelper extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('formatNumber', [$this, 'formatNumber']),
             new TwigFunction('maskApiKey', [$this, 'maskApiKey']),
             new TwigFunction('hash', [$this, 'hash']),
             new TwigFunction('timeAgo', [$this, 'timeAgo']),
@@ -38,6 +39,23 @@ class TwigHelper extends AbstractExtension
             new TwigFunction('madeBy', [$this, 'getMadeBy']),
             new TwigFunction('version', [$this, 'getVersion']),
         ];
+    }
+
+    public function formatNumber($number): string
+    {
+        $formatedNumber = '';
+
+        if ($number < 1000) {
+            $formatedNumber = $number;
+        } elseif ($number < 1000000) {
+            $formatedNumber = round($number / 1000, 1) . 'k'; // Format for thousands
+        } elseif ($number < 1000000000) {
+            $formatedNumber = round($number / 1000000, 1) . 'M'; // Format for millions
+        } else {
+            $formatedNumber = round($number / 1000000000, 1) . 'B'; // Format for billions
+        }
+
+        return (string)$formatedNumber;
     }
 
     public function maskApiKey(string $apiKey): string
